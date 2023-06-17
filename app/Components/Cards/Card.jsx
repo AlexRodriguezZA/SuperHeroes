@@ -28,7 +28,7 @@ const Card = ({nombre, nombrePersonaje, biografia, imagenHeroe, id}) => {
         </h3>
 
         <section className="w-full h-full flex flex-col items-center mt-3">
-          <p className="w-11/12 text-md text-blue-50 text-center">
+          <p className="w-11/12 text-md text-cyan-50 text-center">
             {biografiaTruncada}
           </p>
         </section>

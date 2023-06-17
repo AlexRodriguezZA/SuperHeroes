@@ -1,54 +1,99 @@
 "use client";
 
+
 import Image from "next/image";
-import flash from "../../../assets/SuperHeroesCards/Flash.png";
 import Marvel from "../../../assets/Logos/marvel_logo.svg";
 import DC from "../../../assets/Logos/DC_logo.png";
 import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
+import Swal from "sweetalert2";
 
 import { useState } from "react";
+import { deleteHeroe } from "@/utils/deleteHeroe";
+import { useRouter } from 'next/navigation'
+
 
 //TODO: Hacer andar el map de la imagenes
 
 const CardDetail = ({ heroe }) => {
-  //Evaluate that it is in edit mode to activate the inputs
+  const router = useRouter()
+
   const [EditingMode, setEditingMode] = useState(false);
+
+  const [name, setname] = useState(heroe.name);
+  const [nameCharacter, setnameCharacter] = useState(heroe.nameCharacter);
+  const [home, sethome] = useState(heroe.home);
+  const [year, setyear] = useState(heroe.year);
+  const [biography, setbigraphy] = useState(heroe.biography);
+
+
+
+  {
+    /*Mejorar codigo de imagenes */
+  }
   const prefix = "uploads/";
   const startIndex = heroe.imagesPath[0].path.indexOf(prefix) + prefix.length;
   const result = heroe.imagesPath[0].path.substring(startIndex);
   const ruta_imagen = "http://localhost:5000/publicCharactersImage/" + result;
-  console.log(heroe.imagesPath[0])
+
+  const Equipamiento = heroe.equipment.toString();
+
+  const handleDeleteHeroe = async () =>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Se eliminará permanentemente ${heroe.name}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!'
+    }).then(async (result) =>  {
+      if (result.isConfirmed) {
+        const res = await deleteHeroe(heroe._id);
+        if (res === "ok") {
+          Swal.fire(
+          'Eliminado!',
+          `${heroe.name} ha sido eliminado.`,
+          'success'
+        )
+        router.push('/')
+        }
+        
+      }
+    })
+  } 
   return (
     <div className="w-11/12 flex flex-col items-center mt-4 bg-slate-100 divide-y-4 divide-slate-400/25 md:flex-row md:w-4/5 md:items-start md:gap-4 md:divide-y-0 md:shadow-md md:border-2	">
       <section className="w-4/5 md:flex md:h-full	">
         {/*Carrousel          <Image src={flash} alt="Imagen del superheroe" />
          */}
-         <AwesomeSlider bullets={false} className="h-full md:max-h-96" animation="foldOutAnimation">
-    { heroe.imagesPath?.length === 1 ? (
-      <div className="w-4/5">
-        <Image
-          src={ruta_imagen}
-          width={400}
-          height={500}
-          alt="Imagen del superheroe"
-        />
-      </div>
-    ): (
-      heroe.imagesPath?.map((imagen)=>{
-        <div className="w-4/5">
-        <Image
-          src={ruta_imagen}
-          width={400}
-          height={500}
-          alt="Imagen del superheroe"
-        />
-      </div>
-      })
-    )
-  }
- 
-  </AwesomeSlider>
+        <AwesomeSlider
+          bullets={false}
+          className="h-full md:max-h-96"
+          animation="foldOutAnimation"
+        >
+          {heroe.imagesPath?.length === 1 ? (
+            <div className="w-4/5">
+              <Image
+                src={ruta_imagen}
+                width={400}
+                height={500}
+                alt="Imagen del superheroe"
+              />
+            </div>
+          ) : (
+            heroe.imagesPath?.map((imagen) => {
+              <div className="w-4/5">
+                <Image
+                  src={ruta_imagen}
+                  width={400}
+                  height={500}
+                  alt="Imagen del superheroe"
+                />
+              </div>;
+            })
+          )}
+        </AwesomeSlider>
       </section>
 
       <section className="flex flex-col w-full">
@@ -61,6 +106,7 @@ const CardDetail = ({ heroe }) => {
             <input
               type="text"
               name=""
+              value={name}
               id=""
               className="w-4/5 h-12  border-2 border-pink-500 rounded-lg text-5xl text-center tracking-wider"
             />
@@ -76,6 +122,7 @@ const CardDetail = ({ heroe }) => {
               type="text"
               name=""
               id=""
+              value={nameCharacter}
               className="w-4/12 h-5 border-2 border-sky-900 text-xl rounded-lg text-center tracking-wider text-slate-600"
             />
           )}
@@ -86,28 +133,40 @@ const CardDetail = ({ heroe }) => {
             <span className="text-slate-600">{heroe.year}</span>
           ) : (
             <input
-              type="text"
+              type="number"
               name=""
               id=""
+              value={year}
               className="w-4/12 h-5 border-2 border-sky-900 text-xl rounded-lg text-center tracking-wider text-slate-600"
             />
           )}
         </p>
         <p className="ml-4 text-xl mt-3">
-          Equipamiento: <span className="text-slate-600">No tiene</span>
+          Equipamiento {" "}
+          {!EditingMode ? (
+            <span className="text-slate-600">{Equipamiento}</span>
+          ) : (
+            <input
+              type="text"
+              name=""
+              id=""
+              value={Equipamiento}
+              className="w-4/12 h-5 border-2 border-sky-900 text-xl rounded-lg text-center tracking-wider text-slate-600"
+            />
+          )}
         </p>
         <div className="ml-4 text-xl mt-3 flex flex-row items-center gap-3">
           Casa:{" "}
           {!EditingMode ? (
             <div>
-              {
-                heroe.home === "dc" ? <Image src={DC} alt="DC comics" width={40} />
-                : <Image src={Marvel} alt="DC comics" width={70} />
-
-              }
+              {heroe.home === "dc" ? (
+                <Image src={DC} alt="DC comics" width={40} />
+              ) : (
+                <Image src={Marvel} alt="DC comics" width={70} />
+              )}
             </div>
           ) : (
-            <select name="" id="">
+            <select name="" value={home} selected id="">
               <option value="">DC</option>
               <option value="">Marvel</option>
             </select>
@@ -125,8 +184,9 @@ const CardDetail = ({ heroe }) => {
               type="text"
               name=""
               id=""
+              value={biography}
               rows={4}
-              className="w-11/12 border-2 border-sky-900 text-lg text-justify rounded-lg tracking-wider text-slate-600"
+              className="w-11/12 p-4 border-2 border-sky-900 text-lg text-justify rounded-lg tracking-wider text-slate-600"
             />
           )}
         </div>
@@ -152,7 +212,7 @@ const CardDetail = ({ heroe }) => {
               Cancelar
             </button>
           ) : (
-            <button className="text-slate-200 bg-red-500 font-bold uppercase px-3 py-2 rounded text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+            <button onClick={handleDeleteHeroe} className="text-slate-200 bg-red-500 font-bold uppercase px-3 py-2 rounded text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
               Eliminar
             </button>
           )}

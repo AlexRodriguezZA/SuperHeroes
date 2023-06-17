@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import ErrorForm from "./ErrorForm";
 import { addNewHeroe } from "@/utils/addNewHeroe";
 
+import Swal from "sweetalert2";
 
 
 
@@ -59,7 +59,11 @@ export default function FormAddNew() {
       formData.year === 0 ||
       formData.equipment.length > 0
     ) {
-      setError(true);
+      Swal.fire(
+        'Cuidado!',
+        `Debe Completar todos los campos`,
+        'error'
+      )
       return;
     }
     const NewArrayEquipment = Equipment.replace(/ /g, "").split(","); //Eliminamos espacios en blanco y transformmos en array
@@ -68,7 +72,12 @@ export default function FormAddNew() {
     console.log(formData)
     await addNewHeroe(formData);
     handleResetForm()
-    setError(false);
+    Swal.fire(
+      'Cargado!',
+      `${formData.name} ha sido cargado correctamente.`,
+      'success'
+    )
+
   };
 
   return (
@@ -81,7 +90,7 @@ export default function FormAddNew() {
             <h3 className="text-3xl w-full text-center font-semibold">
               Agregar personaje
             </h3>
-            {Error && <ErrorForm />}
+          
           </div>
           {/*body*/}
           <div className="relative p-6 flex justify-center">

@@ -72,8 +72,7 @@ const CardDetail = ({ heroe }) => {
           className="h-full md:max-h-96"
           animation="foldOutAnimation"
         >
-          {heroe.imagesPath?.length === 1 ? (
-            <div className="w-4/5">
+          <div className="w-4/5">
               <Image
                 src={ruta_imagen}
                 width={400}
@@ -81,18 +80,6 @@ const CardDetail = ({ heroe }) => {
                 alt="Imagen del superheroe"
               />
             </div>
-          ) : (
-            heroe.imagesPath?.map((imagen) => {
-              <div className="w-4/5">
-                <Image
-                  src={ruta_imagen}
-                  width={400}
-                  height={500}
-                  alt="Imagen del superheroe"
-                />
-              </div>;
-            })
-          )}
         </AwesomeSlider>
       </section>
 

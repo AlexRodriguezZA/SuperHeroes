@@ -15,7 +15,7 @@ const SectionDC = async () => {
     <section className="mt-5 w-full">
       <HeaderDC/>
     </section>
-    <section className="w-full flex flex-col justify-center items-center mb-10">
+    <section className="w-full flex flex-col justify-center items-center mt-10 mb-10">
     <CardList heroes={dataHeroesDC}/>
     </section>
 

@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 export default function FormAddNew() {
   //Nos permite tomar el estado del input del cada equipamiento del superheroe para luego
   //poder cargarlo en el array de equipamiento el cual se encuentra en objeto formData
-  const [Equipment, setEquipment] = useState("");
+  const [Equipment, setEquipment] = useState("...");
   const [Images, setImages] = useState([])
   const [formData, setFormData] = useState({
     name: "",
@@ -91,7 +91,7 @@ export default function FormAddNew() {
           
           </div>
           {/*body*/}
-          <div className="relative p-6 flex justify-center">
+          <div className="relative  flex justify-center">
             <form action="" className="w-11/12 flex gap-8">
               <section className="w-1/2">
                 <div className="mb-4">
@@ -181,9 +181,10 @@ export default function FormAddNew() {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-
+                  <label htmlFor="">Imagen principal</label>
                   <input type="file" onChange={handleImageUpload}/>
 
+                  <label htmlFor="">Imagenes Secundarias</label>
                   <input type="file" onChange={handleImageUpload}/>
 
                   <input type="file" onChange={handleImageUpload}/>

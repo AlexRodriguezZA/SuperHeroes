@@ -4,5 +4,6 @@ export const getPathImage = (path) =>{
     const result = path.substring(startIndex);
     const ruta_imagen = "http://localhost:5000/publicCharactersImage/" + result;
     return ruta_imagen;
+
   
 }

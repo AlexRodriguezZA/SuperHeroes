@@ -29,7 +29,7 @@ const Card = ({nombre, nombrePersonaje, biografia, imagenHeroe, id}) => {
         </section>
         <div className="w-full px-4 py-2">
           <button className="w-full rounded-lg bg-cyan-400 hover:bg-cyan-500 mb-1 h-10 hover:cursor-pointer">
-            <Link href={`/${id}`} className="w-full h-full">Ver</Link>
+            <Link href={`/${id}`}>Ver</Link>
           </button>
         </div>
       </section>

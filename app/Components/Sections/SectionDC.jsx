@@ -1,14 +1,13 @@
+"use client"
+
 import HeaderDC from "../Headers/HeaderDC"
 import CardList from "../CardList";
-async function getData() {
-  const res = await fetch("http://localhost:5000/getDCs", {
-    cache: "no-store",
-  });
+import { useState } from "react";
 
-  return res.json();
-}
-const SectionDC = async () => {
-  const dataHeroesDC = await getData();
+const SectionDC = async ({data}) => {
+
+
+  const [Heroes, setHeroes] = useState(data)
 
   return (
     <>
@@ -16,7 +15,7 @@ const SectionDC = async () => {
       <HeaderDC/>
     </section>
     <section className="w-full flex flex-col justify-center items-center mt-10 mb-10">
-    <CardList heroes={dataHeroesDC}/>
+      <CardList heroes={Heroes}/>
     </section>
 
   </>

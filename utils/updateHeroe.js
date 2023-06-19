@@ -1,26 +1,17 @@
-export const updateHeroe = async (ObjectSuperHeroe) => {
+export const updateHeroe = async (ObjectSuperHeroe, id) => {
     try {
-      console.log(ObjectSuperHeroe);
-      const formData = new FormData();
-      formData.append("name", ObjectSuperHeroe.name);
-      formData.append("year", ObjectSuperHeroe.year);
-      formData.append("home", ObjectSuperHeroe.home);
-      formData.append("biography", ObjectSuperHeroe.biography);
-      formData.append("nameCharacter", ObjectSuperHeroe.nameCharacter);
-      ObjectSuperHeroe.equipment.forEach((equipment, index) => {
-        formData.append(`equipment`, equipment);
-      });
-      ObjectSuperHeroe.imagesPath.forEach((imagen, index) => {
-        formData.append(`image`, imagen);
-      });
-  
+      //console.log(ObjectSuperHeroe);
       const options = {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(ObjectSuperHeroe),
       };
   
-      const response = await fetch("http://localhost:5000/addCharacter", options);
+      const response = await fetch(`http://localhost:5000/updateCharacter/${id}`, options);
       console.log(response);
+      return response.statusText;
     } catch (error) {
       console.log(error);
     }

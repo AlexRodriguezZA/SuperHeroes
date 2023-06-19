@@ -13,7 +13,7 @@ const page = async ({ params }) => {
 
   return (
     <div className="w-full flex justify-center">
-      <CardDetail heroe={heroe.data} />
+      <CardDetail heroe={heroe.data} id={id}/>
     </div>
   );
 };

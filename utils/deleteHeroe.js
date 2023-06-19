@@ -5,7 +5,7 @@ export const deleteHeroe = async (id) => {
       };
   
       const response = await fetch(`http://localhost:5000/delCharacter/${id}`, options);
-      return "ok";
+      return response.statusText;
     } catch (error) {
       console.log(error);
     }

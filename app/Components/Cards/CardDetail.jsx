@@ -6,7 +6,6 @@ import Marvel from "../../../assets/Logos/marvel_logo.svg";
 import DC from "../../../assets/Logos/DC_logo.png";
 import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
-
 import Swal from "sweetalert2";
 
 import { useState } from "react";
@@ -14,14 +13,15 @@ import { deleteHeroe } from "@/utils/deleteHeroe";
 import { useRouter } from "next/navigation";
 import { updateHeroe } from "@/utils/updateHeroe";
 import { getPathImage } from "@/utils/getPathImage";
-//TODO: Hacer andar el map de la imagenes
 
 const CardDetail = ({ heroe, id }) => {
   const router = useRouter();
-  //Transformamos el array de equipamiento a string
+
+  //Activamos el  modo de edición de la card 
+   const [EditingMode, setEditingMode] = useState(false);
+ //Transformamos el array de equipamiento a string para editarlo
   const Equipamiento = heroe.equipment.toString();
 
-  const [EditingMode, setEditingMode] = useState(false);
 
   const [name, setname] = useState(heroe.name);
   const [nameCharacter, setnameCharacter] = useState(heroe.nameCharacter);
@@ -30,15 +30,6 @@ const CardDetail = ({ heroe, id }) => {
   const [biography, setbigraphy] = useState(heroe.biography);
   const [equipment, setequipment] = useState(Equipamiento);
 
-  {
-    /*Mejorar codigo de imagenes */
-  }
-  const prefix = "uploads/";
-  const startIndex = heroe.imagesPath[0].path.indexOf(prefix) + prefix.length;
-  const result = heroe.imagesPath[0].path.substring(startIndex);
-  const ruta_imagen = "http://localhost:5000/publicCharactersImage/" + result;
-
-  //console.log(heroe.imagesPath)
   const handleDeleteHeroe = async () => {
     Swal.fire({
       title: "Are you sure?",
@@ -99,8 +90,6 @@ const CardDetail = ({ heroe, id }) => {
   return (
     <div className="w-11/12 flex flex-col items-center mt-4 bg-slate-100 divide-y-4 divide-slate-400/25 md:flex-row md:w-4/5 md:items-start md:gap-4 md:divide-y-0 md:shadow-md md:border-2	">
       <section className="w-4/5 md:flex md:h-full	">
-        {/*Carrousel          <Image src={flash} alt="Imagen del superheroe" />
-         */}
         <AwesomeSlider
           bullets={false}
           className="h-full md:max-h-96"
@@ -109,14 +98,14 @@ const CardDetail = ({ heroe, id }) => {
           {heroe.imagesPath &&
             heroe.imagesPath.map((imagen, index) => {
               let path = getPathImage(imagen.path);
-              return <div className="w-4/5" data-src={path} key={index} />;
+              return <div className="w-full" data-src={path} key={index} />;
             })}
         </AwesomeSlider>
       </section>
 
       <section className="flex flex-col w-full">
         {!EditingMode ? (
-          <h3 className="w-full text-center text-5xl mt-4 tracking-wider uppercase underline decoration-pink-500">
+          <h3 className="w-full text-center text-4xl md:text-5xl mt-4 tracking-wider uppercase underline decoration-pink-500">
             {heroe.name}
           </h3>
         ) : (

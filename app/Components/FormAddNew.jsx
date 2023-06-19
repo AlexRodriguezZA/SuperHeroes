@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 
 
 export default function FormAddNew() {
-   const [Error, setError] = useState(false);
   //Nos permite tomar el estado del input del cada equipamiento del superheroe para luego
   //poder cargarlo en el array de equipamiento el cual se encuentra en objeto formData
   const [Equipment, setEquipment] = useState("");
@@ -50,7 +49,7 @@ export default function FormAddNew() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const SendInfo = async (event) => {
+  const SendInfo = async () => {
     if (
       formData.name === "" ||
       formData.nameCharacter === "" ||
@@ -69,7 +68,6 @@ export default function FormAddNew() {
     const NewArrayEquipment = Equipment.replace(/ /g, "").split(","); //Eliminamos espacios en blanco y transformmos en array
     formData.equipment.push(...NewArrayEquipment);
     formData.imagesPath.push(...Images)
-    console.log(formData)
     await addNewHeroe(formData);
     handleResetForm()
     Swal.fire(
@@ -145,24 +143,22 @@ export default function FormAddNew() {
                     Casa a la que pertenece:
                   </label>
                   <select
-                    id="casa"
                     name="home"
                     value={formData.home}
                     onChange={handleInputChange}
                     className="border border-gray-300 rounded px-3 py-2 w-full"
                     required
                   >
-                    <option value="">Seleccione una casa</option>
+                    <option >Seleccione una casa</option>
                     <option value="marvel">Marvel</option>
                     <option value="dc">DC</option>
                   </select>
                 </div>
                 <div className="mb-4">
                   <label htmlFor="biografia" className="block mb-2">
-                    Breve Biografía:
+                    Biografía:
                   </label>
                   <textarea
-                    id="biografia"
                     name="biography"
                     value={formData.biography}
                     onChange={handleInputChange}
@@ -173,40 +169,19 @@ export default function FormAddNew() {
 
                 <div className="mb-4">
                   <label htmlFor="equipamiento" className="block mb-2">
-                    Equipamiento:
+                    Equipamiento <span className="text-slate-400">(separar por comas)</span>:
                   </label>
                   {/*------------------------------------------------- */}
                   <input
                     type="text"
-                    id="equipamiento"
                     value={Equipment}
                     onChange={handleEquipment}
                     placeholder="item1, item2, etc..."
                     className="border border-gray-300 rounded px-3 py-2  w-full"
                   />
                 </div>
-                <div className="mb-2 flex flex-col gap-2">
-                  {/* <label
-                        htmlFor="cantidadImagenes"
-                        className="block font-medium mb-2"
-                      >
-                        Cargar Imágenes:
-                      </label>
+                <div className="flex flex-col gap-2">
 
-                      {Array.from(
-                        { length: imageInputCounter.current },
-                        (_, index) => (
-                          <input key={index} type="file" />
-                        )
-                      )}
-
-                      <div className="w-full flex justify-end mt-1 gap-2">
-                        <ButtonAddMoreImage add={addimageInput} />
-                        <ButtonRestImage
-                          rest={restimageInput}
-                          CantidadInputImagenes={imageInputCounter.current}
-                        />
-                      </div>*/}
                   <input type="file" onChange={handleImageUpload}/>
 
                   <input type="file" onChange={handleImageUpload}/>
@@ -224,14 +199,14 @@ export default function FormAddNew() {
               className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-3 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="submit"
             >
-              Save
+              Guardar
             </button>
             <button
               onClick={() => handleResetForm()}
               className="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-3 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="submit"
             >
-              Cancel
+              Cancelar
             </button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 export const addNewHeroe = async (ObjectSuperHeroe) => {
   try {
-    console.log(ObjectSuperHeroe);
+    //console.log(ObjectSuperHeroe);
     const formData = new FormData();
     formData.append("name", ObjectSuperHeroe.name);
     formData.append("year", ObjectSuperHeroe.year);
@@ -20,7 +20,7 @@ export const addNewHeroe = async (ObjectSuperHeroe) => {
     };
 
     const response = await fetch("http://localhost:5000/addCharacter", options);
-    console.log(response);
+    //console.log(response);
   } catch (error) {
     console.log(error);
   }
